@@ -1,11 +1,40 @@
-const Login = () => {
+import { useState } from "react";
+
+const Login = ({login}) => {
+    const [name, setName] = useState('');
+    const [error, setError] = useState('');
+
+    const checkLogin = () => {
+        if (!name) {
+            setError('Bitte geben Sie einen Namen ein.');
+            return;
+        }
+
+        setError('');
+        login(name);
+    };
+
     return (
-        <div class="card" style="width: 18rem;">
-            <img src="..." class="card-img-top" alt="...">
-            <div class="card-body">
-                <h5 class="card-title">Card title</h5>
-                <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
-                <a href="#" class="btn btn-primary">Go somewhere</a>
+        <div className="card d-flex align-items-center">
+            <div className="card-body">
+                <h5 className="card-title">Bitte einloggen</h5>
+                <p className="card-text">
+                    <input  type="text"
+                            placeholder="Ihr Name"
+                            className="form-control"
+                            onChange={e => setName(e.target.value)}
+                            onKeyPress={e => {
+                                if (e.charCode === 13) {
+                                    checkLogin();
+                                }
+                            }}
+                        />
+                </p>
+                {error ? <p className="alert alert-danger">{error}</p> : ''}
+                <button className="btn btn-primary"
+                        onClick={checkLogin}
+                        >Einloggen
+                </button>
             </div>
         </div>
     );
